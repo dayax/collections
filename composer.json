@@ -1,7 +1,7 @@
 {
     "name": "dayax/collections",
     "type": "library",
-    "description": "PHP library to handle array",
+    "description": "Library to handle array",
     "homepage": "https://github.com/dayax/core",
     "license": "MIT",
     "keywords": [
@@ -16,7 +16,8 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=5.3.0",
+        "dayax/core": "@dev"
     },
     "target-dir": "dayax/collections",
     "autoload":{
