@@ -18,6 +18,7 @@
     "require": {
         "php": ">=5.3.0"
     },
+    "target-dir": "dayax/collections",
     "autoload":{
         "psr-0":{
             "dayax\\collections": ""
