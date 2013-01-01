@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the dayax package.
+ *
+ * (c) Anthonius Munthi <me@itstoni.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace dayax\collections;
 
 /**
@@ -70,7 +79,7 @@ class PriorityList extends ListCollection
 	 * @param boolean whether the list is read-only
 	 * @param numeric the default priority of items without specified priorities.
 	 * @param integer the precision of the numeric priorities
-	 * @throws TInvalidDataTypeException If data is not null and is neither an array nor an iterator.
+	 * @throws InvalidDataTypeException If data is not null and is neither an array nor an iterator.
 	 */
 	public function __construct($data=null,$readOnly=false,$defaultPriority=10,$precision=8)
 	{
@@ -205,7 +214,7 @@ class PriorityList extends ListCollection
 	 * {@link offsetGet} calls this method.
 	 * @param integer the index of the item to get
 	 * @return mixed the element at the offset
-	 * @throws TInvalidDataValueException Issued when the index is invalid
+	 * @throws InvalidDataValueException Issued when the index is invalid
 	 */
 	public function itemAt($index)
 	{
@@ -254,7 +263,7 @@ class PriorityList extends ListCollection
 	 * @param mixed item to add into the list at priority
 	 * @param numeric priority blank or null for the default priority
 	 * @return int the index within the flattened array
-	 * @throws TInvalidOperationException if the map is read-only
+	 * @throws InvalidOperationException if the map is read-only
 	 */
 	public function add($item,$priority=null)
 	{
@@ -269,8 +278,8 @@ class PriorityList extends ListCollection
 	 * and then inserts the item at that priority-index.
 	 * @param integer the specified position in the flattened list.
 	 * @param mixed new item to add
-	 * @throws TInvalidDataValueException If the index specified exceeds the bound
-	 * @throws TInvalidOperationException if the list is read-only
+	 * @throws InvalidDataValueException If the index specified exceeds the bound
+	 * @throws InvalidOperationException if the list is read-only
 	 */
 	public function insertAt($index,$item)
 	{
@@ -362,7 +371,7 @@ class PriorityList extends ListCollection
 	 * @param numeric priority of item to remove. without this parameter it defaults to false.
 	 * A value of false means any priority. null will be filled in with the default priority.
 	 * @return integer index within the flattened list at which the item is being removed
-	 * @throws TInvalidDataValueException If the item does not exist
+	 * @throws InvalidDataValueException If the item does not exist
 	 */
 	public function remove($item,$priority=false)
 	{
@@ -390,8 +399,8 @@ class PriorityList extends ListCollection
 	 * Removes an item at the specified index in the flattened list.
 	 * @param integer index of the item to be removed.
 	 * @return mixed the removed item.
-	 * @throws TInvalidDataValueException If the index specified exceeds the bound
-	 * @throws TInvalidOperationException if the list is read-only
+	 * @throws InvalidDataValueException If the index specified exceeds the bound
+	 * @throws InvalidOperationException if the list is read-only
 	 */
 	public function removeAt($index)
 	{
@@ -410,7 +419,7 @@ class PriorityList extends ListCollection
 	 * @param integer index of item to remove within the priority.
 	 * @param numeric priority of the item to remove, defaults to null, or left blank, it is then set to the default priority
 	 * @return mixed the removed item.
-	 * @throws TInvalidDataValueException If the item does not exist
+	 * @throws InvalidDataValueException If the item does not exist
 	 */
 	public function removeAtIndexInPriority($index, $priority=null)
 	{
@@ -534,7 +543,7 @@ class PriorityList extends ListCollection
 	 * @param mixed indexitem the item to index
 	 * @param mixed the item to add before indexitem
 	 * @return integer where the item has been inserted in the flattened list
-	 * @throws TInvalidDataValueException If the item does not exist
+	 * @throws InvalidDataValueException If the item does not exist
 	 */
 	public function insertBefore($indexitem, $item)
 	{
@@ -556,7 +565,7 @@ class PriorityList extends ListCollection
 	 * @param mixed indexitem the item to index
 	 * @param mixed the item to add after indexitem
 	 * @return integer where the item has been inserted in the flattened list
-	 * @throws TInvalidDataValueException If the item does not exist
+	 * @throws InvalidDataValueException If the item does not exist
 	 */
 	public function insertAfter($indexitem, $item)
 	{
@@ -633,7 +642,7 @@ class PriorityList extends ListCollection
 	 * Copies iterable data into the priority list.
 	 * Note, existing data in the map will be cleared first.
 	 * @param mixed the data to be copied from, must be an array or object implementing Traversable
-	 * @throws TInvalidDataTypeException If data is neither an array nor an iterator.
+	 * @throws InvalidDataTypeException If data is neither an array nor an iterator.
 	 */
 	public function copyFrom($data)
 	{
@@ -661,7 +670,7 @@ class PriorityList extends ListCollection
 	 * the incoming parameter items will be appended at the priorities they are present.  These items will be added
 	 * to the end of the existing items with equal priorities, if there are any.
 	 * @param mixed the data to be merged with, must be an array or object implementing Traversable
-	 * @throws TInvalidDataTypeException If data is neither an array nor an iterator.
+	 * @throws InvalidDataTypeException If data is neither an array nor an iterator.
 	 */
 	public function mergeWith($data)
 	{

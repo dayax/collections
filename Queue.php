@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the dayax package.
+ *
+ * (c) Anthonius Munthi <me@itstoni.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace dayax\collections;
 
 use dayax\core\Component;
@@ -39,7 +48,7 @@ class Queue extends Component implements \IteratorAggregate,\Countable
 	 * Constructor.
 	 * Initializes the queue with an array or an iterable object.
 	 * @param array|Iterator the intial data. Default is null, meaning no initialization.
-	 * @throws TInvalidDataTypeException If data is not null and neither an array nor an iterator.
+	 * @throws InvalidDataTypeException If data is not null and neither an array nor an iterator.
 	 */
 	public function __construct($data=null)
 	{
@@ -60,7 +69,7 @@ class Queue extends Component implements \IteratorAggregate,\Countable
 	 * Copies iterable data into the queue.
 	 * Note, existing data in the list will be cleared first.
 	 * @param mixed the data to be copied from, must be an array or object implementing Traversable
-	 * @throws TInvalidDataTypeException If data is neither an array nor a Traversable.
+	 * @throws InvalidDataTypeException If data is neither an array nor a Traversable.
 	 */
 	public function copyFrom($data)
 	{
@@ -100,7 +109,7 @@ class Queue extends Component implements \IteratorAggregate,\Countable
 	 * Returns the first item at the front of the queue.
 	 * Unlike {@link dequeue()}, this method does not remove the item from the queue.
 	 * @return mixed item at the top of the queue
-	 * @throws TInvalidOperationException if the queue is empty
+	 * @throws InvalidOperationException if the queue is empty
 	 */
 	public function peek()
 	{
@@ -114,7 +123,7 @@ class Queue extends Component implements \IteratorAggregate,\Countable
 	/**
 	 * Removes and returns the object at the beginning of the queue.
 	 * @return mixed the item at the beginning of the queue
-	 * @throws TInvalidOperationException if the queue is empty
+	 * @throws InvalidOperationException if the queue is empty
 	 */
 	public function dequeue()
 	{
@@ -154,7 +163,7 @@ class Queue extends Component implements \IteratorAggregate,\Countable
 	{
 		return $this->_c;
 	}
-	
+
 	/**
 	 * Returns the number of items in the queue.
 	 * This method is required by Countable interface.

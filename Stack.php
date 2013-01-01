@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the dayax package.
+ *
+ * (c) Anthonius Munthi <me@itstoni.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace dayax\collections;
 
 
@@ -21,10 +30,7 @@ use dayax\core\Component;
  * foreach($stack as $item) ...
  * </code>
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: Stack.php 3187 2012-07-12 11:21:01Z ctrlaltca $
- * @package System.Collections
- * @since 3.0
+ * @author Anthonius Munthi <me@itstoni.com>
  */
 class Stack extends Component implements \IteratorAggregate,\Countable
 {
@@ -43,7 +49,7 @@ class Stack extends Component implements \IteratorAggregate,\Countable
 	 * Constructor.
 	 * Initializes the stack with an array or an iterable object.
 	 * @param array|Iterator the initial data. Default is null, meaning no initialization.
-	 * @throws TInvalidDataTypeException If data is not null and neither an array nor an iterator.
+	 * @throws InvalidDataTypeException If data is not null and neither an array nor an iterator.
 	 */
 	public function __construct($data=null)
 	{
@@ -63,7 +69,7 @@ class Stack extends Component implements \IteratorAggregate,\Countable
 	 * Copies iterable data into the stack.
 	 * Note, existing data in the list will be cleared first.
 	 * @param mixed the data to be copied from, must be an array or object implementing Traversable
-	 * @throws TInvalidDataTypeException If data is neither an array nor a Traversable.
+	 * @throws InvalidDataTypeException If data is neither an array nor a Traversable.
 	 */
 	public function copyFrom($data)
 	{
@@ -102,7 +108,7 @@ class Stack extends Component implements \IteratorAggregate,\Countable
 	 * Returns the item at the top of the stack.
 	 * Unlike {@link pop()}, this method does not remove the item from the stack.
 	 * @return mixed item at the top of the stack
-	 * @throws TInvalidOperationException if the stack is empty
+	 * @throws InvalidOperationException if the stack is empty
 	 */
 	public function peek()
 	{
@@ -115,7 +121,7 @@ class Stack extends Component implements \IteratorAggregate,\Countable
 	/**
 	 * Pops up the item at the top of the stack.
 	 * @return mixed the item at the top of the stack
-	 * @throws TInvalidOperationException if the stack is empty
+	 * @throws InvalidOperationException if the stack is empty
 	 */
 	public function pop()
 	{

@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the dayax project.
+ * This file is part of the dayax package.
  *
- * (c) Anthonius Munthi <toni.dayax@gmail.com>
+ * (c) Anthonius Munthi <me@itstoni.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -30,9 +30,7 @@ use dayax\core\Component;
  * $n=count($map);  // returns the number of items in the map
  * </code>
  *
- * @author      Anthonius Munthi <toni.munthi@gmail.com>
- * @package     dayax.collections
- * @since       1.0
+ * @author      Anthonius Munthi <me@itstoni.com>
  */
 class Map extends Component implements \IteratorAggregate,\ArrayAccess,\Countable
 {

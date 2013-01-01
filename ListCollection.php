@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the dayax project.
+ * This file is part of the dayax package.
  *
- * (c) Anthonius Munthi <toni.dayax@gmail.com>
+ * (c) Anthonius Munthi <me@itstoni.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -33,9 +33,7 @@ use dayax\core\Component;
  * To extend ListCollection by doing additional operations with each addition or removal
  * operation, override {@link insertAt()}, and {@link removeAt()}.
  *
- * @author      Anthonius Munthi <toni.munthi@gmail.com>
- * @package     dayax\collections
- * @since       1.0
+ * @author      Anthonius Munthi <me@itstoni.com>
  */
 class ListCollection extends Component implements \IteratorAggregate,\ArrayAccess,\Countable
 {
@@ -119,7 +117,7 @@ class ListCollection extends Component implements \IteratorAggregate,\ArrayAcces
      * This method is exactly the same as {@link offsetGet}.
      * @param integer the index of the item
      * @return mixed                      the item at the index
-     * @throws TInvalidDataValueException if the index is out of the range
+     * @throws InvalidDataValueException if the index is out of the range
      */
     public function itemAt($index)
     {

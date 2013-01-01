@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the dayax package.
+ *
+ * (c) Anthonius Munthi <me@itstoni.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace dayax\collections;
 
 /**
@@ -82,7 +91,7 @@ class PriorityMap extends Map
 	 * @param boolean whether the list is read-only
 	 * @param numeric the default priority of items without specified priorities.
 	 * @param integer the precision of the numeric priorities
-	 * @throws TInvalidDataTypeException If data is not null and neither an array nor an iterator.
+	 * @throws InvalidDataTypeException If data is not null and neither an array nor an iterator.
 	 */
 	public function __construct($data=null,$readOnly=false,$defaultPriority=10,$precision=8)
 	{
@@ -286,7 +295,7 @@ class PriorityMap extends Map
 		if($priority===null){
 			$priority=$this->getDefaultPriority();
 		}
-        
+
 		$priority=(string)round(floatval($priority),$this->_p);
 
 		return isset($this->_d[$priority])?$this->_d[$priority]:null;
@@ -331,7 +340,7 @@ class PriorityMap extends Map
 	 * @param mixed value
 	 * @param numeric|null priority, default: null, filled in with default priority
 	 * @return numeric priority at which the pair was added
-	 * @throws TInvalidOperationException if the map is read-only
+	 * @throws InvalidOperationException if the map is read-only
 	 */
 	public function add($key,$value,$priority=null)
 	{
@@ -374,7 +383,7 @@ class PriorityMap extends Map
 	 * @param numeric|false|null priority.  False is any priority, null is the
 	 * default priority, and numeric is a specific priority
 	 * @return mixed the removed value, null if no such key exists.
-	 * @throws TInvalidOperationException if the map is read-only
+	 * @throws InvalidOperationException if the map is read-only
 	 */
 	public function remove($key,$priority=false)
 	{
@@ -502,7 +511,7 @@ class PriorityMap extends Map
 	 * Note, existing data in the map will be cleared first.
 	 * @param mixed the data to be copied from, must be an array, object implementing
 	 * Traversable, or a PriorityMap
-	 * @throws TInvalidDataTypeException If data is neither an array nor an iterator.
+	 * @throws InvalidDataTypeException If data is neither an array nor an iterator.
 	 */
 	public function copyFrom($data)
 	{
@@ -532,7 +541,7 @@ class PriorityMap extends Map
 	 * Existing data in the map will be kept and overwritten if the keys are the same.
 	 * @param mixed the data to be merged with, must be an array, object implementing
 	 * Traversable, or a PriorityMap
-	 * @throws TInvalidDataTypeException If data is neither an array nor an iterator.
+	 * @throws InvalidDataTypeException If data is neither an array nor an iterator.
 	 */
 	public function mergeWith($data)
 	{

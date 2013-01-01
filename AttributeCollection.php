@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the dayax package.
+ *
+ * (c) Anthonius Munthi <me@itstoni.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace dayax\collections;
 
 use dayax\collections\Map;
@@ -38,7 +47,7 @@ class AttributeCollection extends Map
 	 * a key value if the key exists in the collection.
 	 * @param string the property name or the event name
 	 * @return mixed the property value or the event handler list
-	 * @throws TInvalidOperationException if the property/event is not defined.
+	 * @throws InvalidOperationException if the property/event is not defined.
 	 */
 	public function __get($name)
 	{
@@ -51,7 +60,7 @@ class AttributeCollection extends Map
 	 * to the collection.
 	 * @param string the property name or event name
 	 * @param mixed the property value or event handler
-	 * @throws TInvalidOperationException If the property is not defined or read-only.
+	 * @throws InvalidOperationException If the property is not defined or read-only.
 	 */
 	public function __set($name,$value)
 	{
