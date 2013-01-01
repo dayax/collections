@@ -16,9 +16,9 @@ class PriorityListItem
 }
 
 /**
- *	All Test cases for the TList are here.  The PriorityList should act just like a TList when used exactly like a TList
+ *	All Test cases for the List are here.  The PriorityList should act just like a List when used exactly like a List
  *
- * The Priority List should start behaving differently when using the class outside of the standard TList Function calls
+ * The Priority List should start behaving differently when using the class outside of the standard List Function calls
  *
  * @package System.Collections
  */
@@ -26,10 +26,10 @@ class PriorityListTest extends TestCase
 {
 	protected $list;
 	protected $item1, $item2, $item3, $item4;
-	
+
 	protected $plist;
 	protected $pfirst, $pitem1, $pitem2, $pitem3, $pitem4, $pitem5;
-	
+
 	public function setUp()
 	{
 		$this->list  = new PriorityList;
@@ -39,8 +39,8 @@ class PriorityListTest extends TestCase
 		$this->item4 = new PriorityListItem(4);
 		$this->list->add($this->item1);
 		$this->list->add($this->item2);
-		
-		// ****  start the setup for non-TList things
+
+		// ****  start the setup for non-List things
 		$this->plist  = new PriorityList;
 		$this->pfirst = new PriorityListItem(5);
 		$this->pitem1 = new PriorityListItem(6);
@@ -55,7 +55,7 @@ class PriorityListTest extends TestCase
 		// 4 and 5 are not inserted
 		// ending setup: pfirst @ -10000000[0], pitem1 @ 10[0], pitem2 @ 10[1], pitem3 @ 100[0]
 	}
-	
+
 	public function tearDown()
 	{
 		$this->list  = null;
@@ -63,8 +63,8 @@ class PriorityListTest extends TestCase
 		$this->item2 = null;
 		$this->item3 = null;
 		$this->item4 = null;
-		
-		// ****  start the setup for non-TList things
+
+		// ****  start the setup for non-List things
 		$this->list  = null;
 		$this->item1 = null;
 		$this->item2 = null;
@@ -72,12 +72,12 @@ class PriorityListTest extends TestCase
 		$this->item4 = null;
 		$this->item5 = null;
 	}
-	
+
 	//*****************************************************************
-	//*******  start test cases for TList operations
-	//*******		PriorityList should act exactly like a TList if no special functions are used
-	
-	public function testConstructTList()
+	//*******  start test cases for List operations
+	//*******		PriorityList should act exactly like a List if no special functions are used
+
+	public function testConstrucList()
 	{
 		$a    = array(
 			1,2,3
@@ -87,27 +87,27 @@ class PriorityListTest extends TestCase
 		$list2 = new PriorityList($this->list);
 		$this->assertEquals(2, $list2->getCount());
 	}
-	
-	public function testGetReadOnlyTList()
+
+	public function testGetReadOnlyList()
 	{
 		$list = new PriorityList(null, true);
 		self::assertEquals(true, $list->getReadOnly(), 'List is not read-only');
 		$list = new PriorityList(null, false);
 		self::assertEquals(false, $list->getReadOnly(), 'List is read-only');
 	}
-	
-	public function testGetCountTList()
+
+	public function testGetCounList()
 	{
 		$this->assertEquals(2, $this->list->getCount());
 		$this->assertEquals(2, $this->list->Count);
 	}
-	
+
 	public function testItemAt()
 	{
 		$this->assertTrue($this->list->itemAt(0) === $this->item1);
 		$this->assertTrue($this->list->itemAt(1) === $this->item2);
 	}
-	
+
 	public function testAddList()
 	{
 		$this->assertEquals(2, $this->list->add(null));
@@ -115,7 +115,7 @@ class PriorityListTest extends TestCase
 		$this->assertEquals(4, $this->list->getCount());
 		$this->assertEquals(3, $this->list->indexOf($this->item3));
 	}
-	
+
 	public function testCanNotAddWhenReadOnlyList()
 	{
 		$list = new PriorityList(array(), true);
@@ -126,8 +126,8 @@ class PriorityListTest extends TestCase
 		catch(\dayax\collections\InvalidOperationException $e) {
 		}
 	}
-	
-	public function testInsertAtTList()
+
+	public function testInsertAList()
 	{
 		$this->assertNull($this->list->insertAt(0, $this->item3));
 		$this->assertEquals(3, $this->list->getCount());
@@ -141,8 +141,8 @@ class PriorityListTest extends TestCase
 		catch( \dayax\collections\InvalidDataValueException $e) {
 		}
 	}
-	
-	public function testCanNotInsertAtWhenReadOnlyTList()
+
+	public function testCanNotInsertAtWhenReadOnlyList()
 	{
 		$list = new PriorityList(array(), true);
 		try {
@@ -158,24 +158,25 @@ class PriorityListTest extends TestCase
 		catch( \dayax\collections\InvalidOperationException $e) {
 		}
 	}
-	
-	public function testInsertBeforeTList()
+
+	public function testInsertBeforeList()
 	{
-		try {
-			$this->list->insertBefore($this->item4, $this->item3);
-			$this->fail('exception not raised when adding item before a non-existant base item');
-		}
-		catch( \dayax\collections\InvalidDataValueException $e) {
-		}
+
 		$this->assertEquals(2, $this->list->getCount());
 		$this->assertEquals(0, $this->list->insertBefore($this->item1, $this->item3));
 		$this->assertEquals(3, $this->list->getCount());
 		$this->assertEquals(0, $this->list->indexOf($this->item3));
 		$this->assertEquals(1, $this->list->indexOf($this->item1));
 		$this->assertEquals(2, $this->list->indexOf($this->item2));
+        try {
+			$this->list->insertBefore($this->item4, $this->item3);
+			$this->fail('exception not raised when adding item before a non-existant base item');
+		}
+		catch( \dayax\collections\InvalidDataValueException $e) {
+		}
 	}
-	
-	public function testCanNotInsertBeforeWhenReadOnlyTList()
+
+	public function testCanNotInsertBeforeWhenReadOnlyList()
 	{
 		$list = new PriorityList(array(
 			5
@@ -193,8 +194,18 @@ class PriorityListTest extends TestCase
 		catch( \dayax\collections\InvalidOperationException $e) {
 		}
 	}
-	
-	public function testInsertAfterTList()
+
+    /**
+     * @expectedException \dayax\collections\InvalidDataValueException
+     */
+    public function testCanNotInsertBeforeWhenItemNotExist()
+    {
+        $list = new PriorityList(array(1,2,3,4,5));
+        $list->insertBefore(12, 5);
+    }
+
+
+	public function testInsertAfterList()
 	{
 		try {
 			$this->list->insertAfter($this->item4, $this->item3);
@@ -209,8 +220,8 @@ class PriorityListTest extends TestCase
 		$this->assertEquals(1, $this->list->indexOf($this->item2));
 		$this->assertEquals(2, $this->list->indexOf($this->item3));
 	}
-	
-	public function testCanNotInsertAfterWhenReadOnlyTList()
+
+	public function testCanNotInsertAfterWhenReadOnlyList()
 	{
 		$list = new PriorityList(array(
 			5
@@ -228,7 +239,7 @@ class PriorityListTest extends TestCase
 		catch( \dayax\collections\InvalidOperationException $e) {
 		}
 	}
-	
+
 	public function testRemoveList()
 	{
 		$this->assertEquals(0, $this->list->remove($this->item1));
@@ -242,19 +253,19 @@ class PriorityListTest extends TestCase
 		catch( \dayax\collections\InvalidDataValueException $e) {
 		}
 	}
-	
-	public function testCanNotRemoveWhenReadOnlyTList()
+
+	public function testCanNotRemoveWhenReadOnlyList()
 	{
 		$list = new PriorityList(array(
 			1,2,3
 		), true);
 		try {
 			$list->remove(2);
-			self::fail('An expected TInvalidOperationException was not raised');
+			self::fail('An expected InvalidOperationException was not raised');
 		}
 		catch( \dayax\collections\InvalidOperationException $e) {
 		}
-		
+
 		$list = new PriorityList(array(
 			1,2,3
 		), true);
@@ -265,8 +276,17 @@ class PriorityListTest extends TestCase
 		catch( \dayax\collections\InvalidOperationException $e) {
 		}
 	}
-	
-	public function testRemoveAtTList()
+
+    /**
+     * @expectedException \dayax\collections\InvalidOperationException
+     */
+    public function testCanNotRemoveAtIndexWhenReadOnly()
+    {
+        $list = new PriorityList(array(1,2,3),true);
+        $list->removeAtIndexInPriority(1);
+    }
+
+	public function testRemoveAList()
 	{
 		$this->list->add($this->item3);
 		$this->assertEquals($this->item2, $this->list->removeAt(1));
@@ -280,8 +300,8 @@ class PriorityListTest extends TestCase
 		catch( \dayax\collections\InvalidDataValueException $e) {
 		}
 	}
-	
-	public function testCanNotRemoveAtWhenReadOnlyTList()
+
+	public function testCanNotRemoveAtWhenReadOnlyList()
 	{
 		$list = new PriorityList(array(
 			1,2,3
@@ -292,7 +312,7 @@ class PriorityListTest extends TestCase
 		}
 		catch( \dayax\collections\InvalidOperationException $e) {
 		}
-		
+
 		$list = new PriorityList(array(
 			1,2,3
 		), true);
@@ -303,16 +323,16 @@ class PriorityListTest extends TestCase
 		catch( \dayax\collections\InvalidOperationException $e) {
 		}
 	}
-	
-	public function testClearTList()
+
+	public function testClearList()
 	{
 		$this->list->clear();
 		$this->assertEquals(0, $this->list->getCount());
 		$this->assertEquals(-1, $this->list->indexOf($this->item1));
 		$this->assertEquals(-1, $this->list->indexOf($this->item2));
 	}
-	
-	public function testCanNotClearWhenReadOnlyTList()
+
+	public function testCanNotClearWhenReadOnlyList()
 	{
 		$list = new PriorityList(array(
 			1,2,3
@@ -325,22 +345,22 @@ class PriorityListTest extends TestCase
 		}
 		self::fail('An expected TInvalidOperationException was not raised');
 	}
-	
-	public function testContainTLists()
+
+	public function testContainLists()
 	{
 		$this->assertTrue($this->list->contains($this->item1));
 		$this->assertTrue($this->list->contains($this->item2));
 		$this->assertFalse($this->list->contains($this->item3));
 	}
-	
-	public function testIndexOfTList()
+
+	public function testIndexOfList()
 	{
 		$this->assertEquals(0, $this->list->indexOf($this->item1));
 		$this->assertEquals(1, $this->list->indexOf($this->item2));
 		$this->assertEquals(-1, $this->list->indexOf($this->item3));
 	}
-	
-	public function testCopyFromTList()
+
+	public function testCopyFromList()
 	{
 		$array = array(
 			$this->item3,$this->item1
@@ -354,8 +374,8 @@ class PriorityListTest extends TestCase
 		catch( \dayax\collections\InvalidDataTypeException $e) {
 		}
 	}
-	
-	public function testMergeWithTList()
+
+	public function testMergeWithList()
 	{
 		$array = array(
 			$this->item3,$this->item1
@@ -369,13 +389,13 @@ class PriorityListTest extends TestCase
 		catch( \dayax\collections\InvalidDataTypeException $e) {
 		}
 	}
-	
+
 	public function testToArrayList()
 	{
 		$array = $this->list->toArray();
 		$this->assertTrue(count($array) == 2 && $array[0] === $this->item1 && $array[1] === $this->item2);
 	}
-	
+
 	public function testArrayReadList()
 	{
 		$this->assertTrue($this->list[0] === $this->item1);
@@ -387,8 +407,8 @@ class PriorityListTest extends TestCase
 		catch( \dayax\collections\InvalidDataValueException $e) {
 		}
 	}
-	
-	public function testGetIteratorTList()
+
+	public function testGetIteratorList()
 	{
 		$n     = 0;
 		$found = 0;
@@ -402,15 +422,15 @@ class PriorityListTest extends TestCase
 		}
 		$this->assertTrue($n == 2 && $found == 2);
 	}
-	
-	public function testArrayMiscTList()
+
+	public function testArrayMiscList()
 	{
 		$this->assertEquals($this->list->Count, count($this->list));
 		$this->assertTrue(isset($this->list[1]));
 		$this->assertFalse(isset($this->list[2]));
 	}
-	
-	public function testOffsetSetAddTList()
+
+	public function testOffsetSetAddList()
 	{
 		$list = new PriorityList(array(
 			1,2,3
@@ -420,8 +440,8 @@ class PriorityListTest extends TestCase
 			1,2,3,4
 		), $list->toArray());
 	}
-	
-	public function testOffsetSetReplaceTList()
+
+	public function testOffsetSetReplaceList()
 	{
 		$list = new PriorityList(array(
 			1,2,3
@@ -431,8 +451,8 @@ class PriorityListTest extends TestCase
 			1,4,3
 		), $list->toArray());
 	}
-	
-	public function testOffsetUnsetTList()
+
+	public function testOffsetUnsetList()
 	{
 		$list = new PriorityList(array(
 			1,2,3
@@ -442,34 +462,34 @@ class PriorityListTest extends TestCase
 			1,3
 		), $list->toArray());
 	}
-	
-	//*******  end test cases for TList operations
+
+	//*******  end test cases for List operations
 	//*****************************************************************
-	
-	
-	//*******  end test cases for TList operations
+
+
+	//*******  end test cases for List operations
 	//*****************************************************************
-	
-	
+
+
 	public function testConstructPriorityList()
 	{
 		$a = array(
 			'a' => 1,'0.5' => 2,9 => 8
 		);
-		
+
 		$list = new PriorityList($a);
 		$this->assertEquals(3, $list->getCount());
-		
+
 		$list2 = new PriorityList($this->plist);
 		// validate that the elements were copied
 		$this->assertEquals(4, $list2->getCount());
 		$this->assertEquals(-10000000, $list2->priorityOf($this->pfirst));
 		$this->assertEquals(100, $list2->priorityOf($this->pitem3));
-		$this->assertEquals(-10000000, $list2->priorityAt(0));		
+		$this->assertEquals(-10000000, $list2->priorityAt(0));
 		$this->assertEquals(100, $list2->priorityAt(3));
 		$this->assertEquals($list2->DefaultPriority, $list2->priorityAt(2));
 	}
-	
+
 	public function testGetPriorityCountPriorityList()
 	{
 		$this->assertEquals(2, $this->plist->getPriorityCount());
@@ -477,22 +497,22 @@ class PriorityListTest extends TestCase
 		$this->assertEquals(1, $this->plist->getPriorityCount(100));
 		$this->assertEquals(1, $this->plist->getPriorityCount(-10000000));
 	}
-	
+
 	public function testItemsAtPriorityPriorityList()
 	{
 		$items = $this->plist->itemsAtPriority();
-		
+
 		$this->assertEquals(2, count($items));
 		$this->assertEquals($this->pitem2, $items[1]);
-		
-		
+
+
 		$items = $this->plist->itemsAtPriority(100);
-		
+
 		$this->assertEquals(1, count($items));
 		$this->assertEquals($this->pitem3, $items[0]);
-		
+
 	}
-	
+
 	public function testItemAtPriorityList()
 	{
 		$this->assertTrue($this->plist->itemAt(0) === $this->pfirst);
@@ -500,17 +520,17 @@ class PriorityListTest extends TestCase
 		$this->assertTrue($this->plist->itemAt(2) === $this->pitem2);
 		$this->assertTrue($this->plist->itemAt(3) === $this->pitem3);
 	}
-	
+
 	public function testAddPriorityList()
 	{
 		$plist = new PriorityList($this->plist);
-		
+
 		$plist->add($this->pitem3, 200);
 		$this->assertEquals(200, $plist->priorityAt(4));
-		
+
 		// try a negative precision and a different default priority
 		$list = new PriorityList(null, false, 256, -1);
-		
+
 		$this->assertEquals(260, $list->getDefaultPriority());
 		$this->assertEquals(-1, $list->getPrecision());
 		$list->add(-10);
@@ -521,16 +541,16 @@ class PriorityListTest extends TestCase
 		$this->assertEquals(250, $list->priorityAt(1));
 		$this->assertEquals(260, $list->priorityAt(2));
 		$this->assertEquals(260, $list->priorityAt(3));
-		
+
 		$priorities = $list->getPriorities();
 		$this->assertEquals(3, count($priorities));
 		$this->assertEquals(200, $priorities[0]);
 		$this->assertEquals(250, $priorities[1]);
 		$this->assertEquals(260, $priorities[2]);
-		
+
 		// try a negative precision and a different default priority
 		$list = new PriorityList(null, false, 0, 4);
-		
+
 		$this->assertEquals(0, $list->getDefaultPriority());
 		$this->assertEquals(4, $list->getPrecision());
 		$list->add(-10);
@@ -541,14 +561,14 @@ class PriorityListTest extends TestCase
 		$this->assertEquals(0, $list->priorityAt(1));
 		$this->assertEquals(0.0001, $list->priorityAt(2));
 		$this->assertEquals(0.001, $list->priorityAt(3));
-		
+
 		$priorities = $list->getPriorities();
 		$this->assertEquals(3, count($priorities));
 		$this->assertEquals(0, $priorities[0]);
 		$this->assertEquals(0.0001, $priorities[1]);
 		$this->assertEquals(0.001, $priorities[2]);
 	}
-	
+
 	public function testInsertAtPriorityList()
 	{
 		$plist = new PriorityList($this->plist);
@@ -562,63 +582,63 @@ class PriorityListTest extends TestCase
 		}
 		$this->assertEquals(100, $plist->priorityAt(4));
 	}
-	
+
 	public function testInsertBeforePriorityList()
 	{
 		$plist = new PriorityList($this->plist);
-		
+
 		$this->assertEquals(4, $plist->getCount());
 		$plist->insertBefore($this->pitem3, $this->pitem4);
 		$this->assertEquals(100, $plist->priorityOf($this->pitem4));
 	}
-	
+
 	public function testInsertAfterPriorityList()
 	{
 		$plist = new PriorityList($this->plist);
-		
+
 		$this->assertEquals(4, $plist->getCount());
 		$plist->insertAfter($this->pfirst, $this->pitem4);
 		$this->assertEquals(-10000000, $plist->priorityOf($this->pitem4));
 	}
-	
+
 	public function testRemovePriorityList()
 	{
 		$plist = new PriorityList($this->plist);
-		
+
 		$this->assertEquals(2, $plist->remove($this->pitem2));
 		$this->assertEquals(1, $plist->getPriorityCount());
-		
+
 		$plist = new PriorityList($this->plist);
-		
+
 		try {
 			$plist->remove($this->pitem5);
 			$this->fail('Exception not raised: TInvalidDataValueException: The item cannot be found in the list');
 		}
 		catch( \dayax\collections\InvalidDataValueException $v) {
 		}
-		
+
 		try {
 			$plist->remove($this->pitem3, null);
 			$this->fail('Exception not raised: TInvalidDataValueException: The item cannot be found in the list');
 		}
 		catch( \dayax\collections\InvalidDataValueException $v) {
 		}
-		
+
 		try {
 			$plist->remove($this->pitem1, 100);
 			$this->fail('Exception not raised: TInvalidDataValueException: The item cannot be found in the list');
 		}
 		catch( \dayax\collections\InvalidDataValueException $v) {
 		}
-		
+
 		$plist->insertBefore($this->pitem3, $this->pitem4);
 		$this->assertEquals(4, $plist->remove($this->pitem3, 100));
 	}
-	
+
 	public function testRemoveAtPriorityList()
 	{
 		$plist = new PriorityList($this->plist);
-		
+
 		$this->assertEquals($this->pitem1, $plist->removeAt(1));
 		$this->assertEquals(-1, $plist->indexOf($this->pitem1));
 		$this->assertEquals(1, $plist->indexOf($this->pitem2));
@@ -630,7 +650,7 @@ class PriorityListTest extends TestCase
 		catch( \dayax\collections\InvalidDataValueException $e) {
 		}
 	}
-	
+
 	public function testItemAtIndexPriorityPriorityList()
 	{
 		$this->assertEquals($this->pitem2, $this->plist->itemAtIndexInPriority(1));
@@ -638,17 +658,17 @@ class PriorityListTest extends TestCase
 		$this->assertEquals($this->pfirst, $this->plist->itemAtIndexInPriority(0, -10000000));
 		$this->assertEquals($this->pitem3, $this->plist->itemAtIndexInPriority(0, 100));
 	}
-	
-	
+
+
 	public function testInsertAtIndexInPriorityPriorityList()
 	{
 		$plist = new PriorityList();
-		
+
 		$plist->insertAtIndexInPriority(3);
 		$this->assertEquals(array(
 			3
 		), $plist->toArray());
-		
+
 		$plist->insertAtIndexInPriority(4, false);
 		$this->assertEquals(array(
 			3,4
@@ -657,7 +677,7 @@ class PriorityListTest extends TestCase
 		$this->assertEquals(array(
 			3,4,5
 		), $plist->toArray());
-		
+
 		$plist->insertAtIndexInPriority(6, false, null);
 		$this->assertEquals(array(
 			3,4,5,6
@@ -666,7 +686,7 @@ class PriorityListTest extends TestCase
 		$this->assertEquals(array(
 			3,4,5,6,7
 		), $plist->toArray());
-		
+
 		$plist->insertAtIndexInPriority(8, false, 10);
 		$this->assertEquals(array(
 			3,4,5,6,7,8
@@ -675,7 +695,7 @@ class PriorityListTest extends TestCase
 		$this->assertEquals(array(
 			3,4,5,6,7,8,9
 		), $plist->toArray());
-		
+
 		$plist->insertAtIndexInPriority(10, false, 100);
 		$this->assertEquals(array(
 			3,4,5,6,7,8,9,10
@@ -684,14 +704,14 @@ class PriorityListTest extends TestCase
 		$this->assertEquals(array(
 			3,4,5,6,7,8,9,10,11
 		), $plist->toArray());
-		
+
 		$plist = new PriorityList();
-		
+
 		$plist->insertAtIndexInPriority(3, false, null, true);
 		$this->assertEquals(array(
 			3
 		), $plist->toArray());
-		
+
 		$plist->insertAtIndexInPriority(4, false, null, true);
 		$this->assertEquals(array(
 			3,4
@@ -700,7 +720,7 @@ class PriorityListTest extends TestCase
 		$this->assertEquals(array(
 			3,4,5
 		), $plist->toArray());
-		
+
 		$plist->insertAtIndexInPriority(6, false, null, true);
 		$this->assertEquals(array(
 			3,4,5,6
@@ -709,7 +729,7 @@ class PriorityListTest extends TestCase
 		$this->assertEquals(array(
 			3,4,5,6,7
 		), $plist->toArray());
-		
+
 		$plist->insertAtIndexInPriority(8, false, 10, true);
 		$this->assertEquals(array(
 			3,4,5,6,7,8
@@ -718,7 +738,7 @@ class PriorityListTest extends TestCase
 		$this->assertEquals(array(
 			3,4,5,6,7,8,9
 		), $plist->toArray());
-		
+
 		$plist->insertAtIndexInPriority(10, false, 100, true);
 		$this->assertEquals(array(
 			3,4,5,6,7,8,9,10
@@ -727,14 +747,14 @@ class PriorityListTest extends TestCase
 		$this->assertEquals(array(
 			3,4,5,6,7,8,9,10,11
 		), $plist->toArray());
-		
+
 		$plist = new PriorityList();
-		
+
 		$plist->insertAtIndexInPriority(3, false, null, false);
 		$this->assertEquals(array(
 			3
 		), $plist->toArray());
-		
+
 		$plist->insertAtIndexInPriority(4, false, null, false);
 		$this->assertEquals(array(
 			3,4
@@ -743,7 +763,7 @@ class PriorityListTest extends TestCase
 		$this->assertEquals(array(
 			3,4,5
 		), $plist->toArray());
-		
+
 		$plist->insertAtIndexInPriority(6, false, null, false);
 		$this->assertEquals(array(
 			3,4,5,6
@@ -752,7 +772,7 @@ class PriorityListTest extends TestCase
 		$this->assertEquals(array(
 			3,4,5,6,7
 		), $plist->toArray());
-		
+
 		$plist->insertAtIndexInPriority(8, false, 10, false);
 		$this->assertEquals(array(
 			3,4,5,6,7,8
@@ -761,7 +781,7 @@ class PriorityListTest extends TestCase
 		$this->assertEquals(array(
 			3,4,5,6,7,8,9
 		), $plist->toArray());
-		
+
 		$plist->insertAtIndexInPriority(10, false, 100, false);
 		$this->assertEquals(array(
 			3,4,5,6,7,8,9,10
@@ -771,8 +791,8 @@ class PriorityListTest extends TestCase
 			3,4,5,6,7,8,9,10,11
 		), $plist->toArray());
 	}
-	
-	public function testCanNotInsertAtIndexInPriorityWhenReadOnlyTList()
+
+	public function testCanNotInsertAtIndexInPriorityWhenReadOnlyList()
 	{
 		$list = new PriorityList(array(), true);
 		try {
@@ -782,8 +802,8 @@ class PriorityListTest extends TestCase
 		catch( \dayax\collections\InvalidOperationException $e) {
 		}
 	}
-	
-	
+
+
 	public function testRemoveAtIndexInPriorityPriorityList()
 	{
 		$plist = new PriorityList($this->plist);
@@ -804,10 +824,10 @@ class PriorityListTest extends TestCase
 		}
 		$this->assertEquals($this->pfirst, $plist->removeAtIndexInPriority(0, -10000000));
 		$this->assertEquals(0, $plist->getCount());
-		
+
 	}
-	
-	public function testCanNotRemoveAtIndexInPriorityWhenReadOnlyTList()
+
+	public function testCanNotRemoveAtIndexInPriorityWhenReadOnlyList()
 	{
 		$plist = new PriorityList($this->plist, true);
 		try {
@@ -817,28 +837,28 @@ class PriorityListTest extends TestCase
 		catch( \dayax\collections\InvalidOperationException $e) {
 		}
 	}
-	
+
 	public function testPriorityOfPriorityList()
 	{
 		$this->assertEquals(10, $this->plist->priorityOf($this->pitem1));
 		$this->assertEquals(100, $this->plist->priorityOf($this->pitem3));
-		
+
 		$priority = $this->plist->priorityOf($this->pfirst, true);
-		
+
 		$this->assertEquals(-10000000, $priority[0]);
 		$this->assertEquals(0, $priority[1]);
 		$this->assertEquals(0, $priority[2]);
-		
+
 		$this->assertEquals(-10000000, $priority['priority']);
 		$this->assertEquals(0, $priority['index']);
 		$this->assertEquals(0, $priority['absindex']);
-		
+
 		$priority = $this->plist->priorityOf($this->pitem2, true);
-		
+
 		$this->assertEquals(10, $priority[0]);
 		$this->assertEquals(1, $priority[1]);
 		$this->assertEquals(2, $priority[2]);
-		
+
 		$this->assertEquals(10, $priority['priority']);
 		$this->assertEquals(1, $priority['index']);
 		$this->assertEquals(2, $priority['absindex']);
@@ -847,29 +867,28 @@ class PriorityListTest extends TestCase
 	{
 		$this->assertEquals(10, $this->plist->priorityAt(2));
 		$this->assertEquals(100, $this->plist->priorityAt(3));
-		
+
 		$priority = $this->plist->priorityAt(0, true);
-		
+
 		$this->assertEquals(-10000000, $priority[0]);
 		$this->assertEquals(0, $priority[1]);
 		$this->assertEquals(0, $priority[2]);
-		
+
 		$this->assertEquals(-10000000, $priority['priority']);
 		$this->assertEquals(0, $priority['index']);
 		$this->assertEquals(0, $priority['absindex']);
-		
+
 		$priority = $this->plist->priorityAt(2, true);
-		
+
 		$this->assertEquals(10, $priority[0]);
 		$this->assertEquals(1, $priority[1]);
 		$this->assertEquals(2, $priority[2]);
-		
+
 		$this->assertEquals(10, $priority['priority']);
 		$this->assertEquals(1, $priority['index']);
 		$this->assertEquals(2, $priority['absindex']);
 	}
-	
-	
+
 	public function testGetPrioritiesPriorityList()
 	{
 		$priorities = $this->plist->getPriorities();
@@ -878,7 +897,7 @@ class PriorityListTest extends TestCase
 		$this->assertEquals(10, $priorities[1]);
 		$this->assertEquals(100, $priorities[2]);
 	}
-	
+
 	public function testClearPriorityList()
 	{
 		$plist = new PriorityList($this->plist);
@@ -887,7 +906,7 @@ class PriorityListTest extends TestCase
 		$this->assertEquals(-1, $plist->indexOf($this->pitem1));
 		$this->assertEquals(-1, $plist->indexOf($this->pitem3));
 	}
-	
+
 	public function testContainPriorityLists()
 	{
 		$plist = new PriorityList($this->plist);
@@ -897,7 +916,7 @@ class PriorityListTest extends TestCase
 		$this->assertTrue($plist->contains($this->pitem3));
 		$this->assertFalse($plist->contains($this->pitem5));
 	}
-	
+
 	public function testIndexOfPriorityList()
 	{
 		$plist = new PriorityList($this->plist);
@@ -907,7 +926,7 @@ class PriorityListTest extends TestCase
 		$this->assertEquals(3, $plist->indexOf($this->pitem3));
 		$this->assertEquals(-1, $plist->indexOf($this->pitem4));
 	}
-	
+
 	public function testCopyFromPriorityList()
 	{
 		$plist = new PriorityList();
@@ -922,7 +941,7 @@ class PriorityListTest extends TestCase
 		$this->assertEquals(100, $plist->priorityOf($this->pitem3));
 		$this->assertEquals(-1, $plist->indexOf($this->pitem4));
 	}
-	
+
 	public function testMergeWithPriorityList()
 	{
 		$plist = new PriorityList(array(
@@ -944,7 +963,7 @@ class PriorityListTest extends TestCase
 		$this->assertEquals(100, $plist->priorityOf($this->pitem3));
 		$this->assertEquals(-1, $plist->indexOf($this->pitem4));
 	}
-	
+
 	public function testToArrayPriorityList()
 	{
 		$array = $this->plist->toArray();
@@ -954,7 +973,7 @@ class PriorityListTest extends TestCase
 		$this->assertEquals($this->pitem2, $array[2]);
 		$this->assertEquals($this->pitem3, $array[3]);
 	}
-	
+
 	public function testToPriorityArrayPriorityList()
 	{
 		$array = $this->plist->toPriorityArray();
@@ -967,34 +986,34 @@ class PriorityListTest extends TestCase
 		$this->assertEquals(1, count($array[100]));
 		$this->assertEquals($this->pitem3, $array[100][0]);
 	}
-	
+
 	public function testToArrayBelowPriority() {
 		$array = $this->plist->toArrayBelowPriority(0);
 		$this->assertEquals($this->pfirst, $array[0]);
 		$this->assertEquals(1, count($array));
-		
+
 		$array = $this->plist->toArrayBelowPriority(10);
 		$this->assertEquals($this->pfirst, $array[0]);
 		$this->assertEquals(1, count($array));
-		
+
 		$array = $this->plist->toArrayBelowPriority(10, true);
 		$this->assertEquals($this->pfirst, $array[0]);
 		$this->assertEquals($this->pitem1, $array[1]);
 		$this->assertEquals($this->pitem2, $array[2]);
 		$this->assertEquals(3, count($array));
-		
+
 		$array = $this->plist->toArrayBelowPriority(11);
 		$this->assertEquals($this->pfirst, $array[0]);
 		$this->assertEquals($this->pitem1, $array[1]);
 		$this->assertEquals($this->pitem2, $array[2]);
 		$this->assertEquals(3, count($array));
-		
+
 		$array = $this->plist->toArrayBelowPriority(100);
 		$this->assertEquals($this->pfirst, $array[0]);
 		$this->assertEquals($this->pitem1, $array[1]);
 		$this->assertEquals($this->pitem2, $array[2]);
 		$this->assertEquals(3, count($array));
-		
+
 		$array = $this->plist->toArrayBelowPriority(100, true);
 		$this->assertEquals($this->pfirst, $array[0]);
 		$this->assertEquals($this->pitem1, $array[1]);
@@ -1002,35 +1021,35 @@ class PriorityListTest extends TestCase
 		$this->assertEquals($this->pitem3, $array[3]);
 		$this->assertEquals(4, count($array));
 	}
-	
+
 	public function testToArrayAbovePriority() {
 		$array = $this->plist->toArrayAbovePriority(100, false);
 		$this->assertEquals(0, count($array));
-		
+
 		$array = $this->plist->toArrayAbovePriority(100, true);
 		$this->assertEquals(1, count($array));
 		$this->assertEquals($this->pitem3, $array[0]);
-		
+
 		$array = $this->plist->toArrayAbovePriority(10, false);
 		$this->assertEquals($this->pitem3, $array[0]);
 		$this->assertEquals(1, count($array));
-		
+
 		$array = $this->plist->toArrayAbovePriority(10);
 		$this->assertEquals($this->pitem1, $array[0]);
 		$this->assertEquals($this->pitem2, $array[1]);
 		$this->assertEquals($this->pitem3, $array[2]);
 		$this->assertEquals(3, count($array));
-		
+
 		$array = $this->plist->toArrayAbovePriority(11);
 		$this->assertEquals($this->pitem3, $array[0]);
 		$this->assertEquals(1, count($array));
-		
+
 		$array = $this->plist->toArrayAbovePriority(0);
 		$this->assertEquals($this->pitem1, $array[0]);
 		$this->assertEquals($this->pitem2, $array[1]);
 		$this->assertEquals($this->pitem3, $array[2]);
 		$this->assertEquals(3, count($array));
-		
+
 		$array = $this->plist->toArrayAbovePriority(-10000000, true);
 		$this->assertEquals($this->pfirst, $array[0]);
 		$this->assertEquals($this->pitem1, $array[1]);
@@ -1038,7 +1057,7 @@ class PriorityListTest extends TestCase
 		$this->assertEquals($this->pitem3, $array[3]);
 		$this->assertEquals(4, count($array));
 	}
-	
+
 	public function testArrayReadPriorityList()
 	{
 		$this->assertTrue($this->plist[0] === $this->pfirst);
@@ -1052,14 +1071,14 @@ class PriorityListTest extends TestCase
 		catch( \dayax\collections\InvalidDataValueException $e) {
 		}
 	}
-	
+
 	public function testGetIteratorPriorityList()
 	{
 		$n     = 0;
 		$found = 0;
-		
+
 		foreach ($this->list as $a => $b); // test of iterator
-		
+
 		foreach ($this->plist as $index => $item) {
 			$n++;
 			if ($index === 0 && $item === $this->pfirst)
@@ -1073,7 +1092,7 @@ class PriorityListTest extends TestCase
 		}
 		$this->assertTrue($n == 4 && $found == 4);
 	}
-	
+
 	public function testArrayMiscPriorityList()
 	{
 		$this->assertEquals($this->plist->Count, count($this->plist));
@@ -1083,7 +1102,7 @@ class PriorityListTest extends TestCase
 		$this->assertTrue(isset($this->plist[3]));
 		$this->assertFalse(isset($this->plist[4]));
 	}
-	
+
 	public function testOffsetSetAddPriorityList()
 	{
 		$list = new PriorityList();
@@ -1095,7 +1114,7 @@ class PriorityListTest extends TestCase
 			1,2,4,3
 		), $list->toArray());
 	}
-	
+
 	public function testOffsetSetReplacePriorityList()
 	{
 		$list = new PriorityList();
@@ -1107,7 +1126,7 @@ class PriorityListTest extends TestCase
 			1,4,3
 		), $list->toArray());
 	}
-	
+
 	public function testOffsetSetAppendPriorityList()
 	{
 		$list = new PriorityList();
@@ -1119,7 +1138,7 @@ class PriorityListTest extends TestCase
 			1,2,3,4
 		), $list->toArray());
 	}
-	
+
 	public function testOffsetUnsetPriorityList()
 	{
 		$list = new PriorityList();
@@ -1131,5 +1150,15 @@ class PriorityListTest extends TestCase
 			1,3
 		), $list->toArray());
 	}
-	
+
+    /**
+     * @expectedException \dayax\collections\InvalidDataValueException
+     */
+    public function testInsertAtShouldThrowWithInvalidIndex()
+    {
+        $p = new PriorityList();
+
+        $p->insertAt(10, 'bar');
+    }
+
 }

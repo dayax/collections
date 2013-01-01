@@ -5,12 +5,12 @@ namespace dayax\collections;
 /**
  * PriorityList class
  *
- * PriorityList implements a priority ordered list collection class.  It allows you to specify 
- * any numeric for priorities down to a specific precision.  The lower the numeric, the high the priority of the item in the 
- * list.  Thus -10 has a higher priority than -5, 0, 10 (the default), 18, 10005, etc.  Per {@link round}, precision may be negative and 
- * thus rounding can go by 10, 100, 1000, etc, instead of just .1, .01, .001, etc. The default precision allows for 8 decimal 
- * places. There is also a default priority of 10, if no different default priority is specified or no item specific priority is indicated.  
- * If you replace TList with this class it will  work exactly the same with items inserted set to the default priority, until you start 
+ * PriorityList implements a priority ordered list collection class.  It allows you to specify
+ * any numeric for priorities down to a specific precision.  The lower the numeric, the high the priority of the item in the
+ * list.  Thus -10 has a higher priority than -5, 0, 10 (the default), 18, 10005, etc.  Per {@link round}, precision may be negative and
+ * thus rounding can go by 10, 100, 1000, etc, instead of just .1, .01, .001, etc. The default precision allows for 8 decimal
+ * places. There is also a default priority of 10, if no different default priority is specified or no item specific priority is indicated.
+ * If you replace TList with this class it will  work exactly the same with items inserted set to the default priority, until you start
  * using different priorities than the default priority.
  *
  * As you access the PHP array features of this class, it flattens and caches the results.  If at all possible, this
@@ -31,12 +31,12 @@ namespace dayax\collections;
  * $n=count($list); // returns the number of items in the list
  * </code>
  *
- * To extend PriorityList for doing your own operations with each addition or removal, 
+ * To extend PriorityList for doing your own operations with each addition or removal,
  * override {@link insertAtIndexInPriority()} and {@link removeAtIndexInPriority()} and then call the parent.
  *
  * @author Anthonius Munthi <me@itstoni.com>
  */
-class PriorityList extends ListCollection 
+class PriorityList extends ListCollection
 {
 	/**
 	 * @var array internal data storage
@@ -62,7 +62,7 @@ class PriorityList extends ListCollection
 	 * @var integer the precision of the numeric priorities within this priority list.
 	 */
 	private $_p=8;
-	
+
 	/**
 	 * Constructor.
 	 * Initializes the list with an array or an iterable object.
@@ -75,13 +75,14 @@ class PriorityList extends ListCollection
 	public function __construct($data=null,$readOnly=false,$defaultPriority=10,$precision=8)
 	{
 		parent::__construct();
-		if($data!==null)
+		if($data!==null){
 			$this->copyFrom($data);
+        }
 		$this->setReadOnly($readOnly);
 		$this->setPrecision($precision);
 		$this->setDefaultPriority($defaultPriority);
 	}
-	
+
 	/**
 	 * Returns the number of items in the list.
 	 * This method is required by Countable interface.
@@ -91,7 +92,7 @@ class PriorityList extends ListCollection
 	{
 		return $this->getCount();
 	}
-	
+
 	/**
 	 * Returns the total number of items in the list
 	 * @return integer the number of items in the list
@@ -100,7 +101,7 @@ class PriorityList extends ListCollection
 	{
 		return $this->_c;
 	}
-	
+
 	/**
 	 * Gets the number of items at a priority within the list
 	 * @param numeric optional priority at which to count items.  if no parameter, it will be set to the default {@link getDefaultPriority}
@@ -111,12 +112,12 @@ class PriorityList extends ListCollection
 		if($priority===null)
 			$priority=$this->getDefaultPriority();
 		$priority=(string)round(floatval($priority),$this->_p);
-		
+
 		if(!isset($this->_d[$priority]) || !is_array($this->_d[$priority]))
 			return false;
 		return count($this->_d[$priority]);
 	}
-	
+
 	/**
 	 * @return numeric gets the default priority of inserted items without a specified priority
 	 */
@@ -124,7 +125,7 @@ class PriorityList extends ListCollection
 	{
 		return $this->_dp;
 	}
-	
+
 	/**
 	 * This must be called internally or when instantiated.
 	 * @param numeric sets the default priority of inserted items without a specified priority
@@ -133,7 +134,7 @@ class PriorityList extends ListCollection
 	{
 		$this->_dp=(string)round(floatval($value),$this->_p);
 	}
-	
+
 	/**
 	 * @return integer The precision of numeric priorities, defaults to 8
 	 */
@@ -141,7 +142,7 @@ class PriorityList extends ListCollection
 	{
 		return $this->_p;
 	}
-	
+
 	/**
 	 * This must be called internally or when instantiated.
 	 * @param integer The precision of numeric priorities.
@@ -151,7 +152,7 @@ class PriorityList extends ListCollection
 	    //@TODO ensure integer
 		$this->_p=(int)$value;
 	}
-	
+
 	/**
 	 * Returns an iterator for traversing the items in the list.
 	 * This method is required by the interface IteratorAggregate.
@@ -161,7 +162,7 @@ class PriorityList extends ListCollection
 	{
 		return new \ArrayIterator($this->flattenPriorities());
 	}
-	
+
 	/**
 	 * This returns a list of the priorities within this list, ordered lowest to highest.
 	 * @return array the array of priority numerics in decreasing priority order
@@ -171,8 +172,8 @@ class PriorityList extends ListCollection
 		$this->sortPriorities();
 		return array_keys($this->_d);
 	}
-	
-	
+
+
 	/**
 	 * This orders the priority list internally.
 	 */
@@ -184,20 +185,20 @@ class PriorityList extends ListCollection
 	}
 
 	/**
-	 * This flattens the priority list into a flat array [0,...,n-1] 
+	 * This flattens the priority list into a flat array [0,...,n-1]
 	 * @return array array of items in the list in priority and index order
 	 */
 	protected function flattenPriorities() {
 		if(is_array($this->_fd))
 			return $this->_fd;
-		
+
 		$this->sortPriorities();
 		$this->_fd=array();
 		foreach($this->_d as $priority => $itemsatpriority)
 			$this->_fd=array_merge($this->_fd,$itemsatpriority);
 		return $this->_fd;
 	}
-	
+
 
 	/**
 	 * Returns the item at the index of a flattened priority list.
@@ -226,7 +227,7 @@ class PriorityList extends ListCollection
 			$priority=$this->getDefaultPriority();
 		}
 		$priority=(string)round(floatval($priority),$this->_p);
-		
+
 		return isset($this->_d[$priority])?$this->_d[$priority]:null;
 	}
 
@@ -241,14 +242,14 @@ class PriorityList extends ListCollection
 		if($priority===null)
 			$priority=$this->getDefaultPriority();
 		$priority=(string)round(floatval($priority), $this->_p);
-		
+
 		return !isset($this->_d[$priority])?false:(
 				isset($this->_d[$priority][$index])?$this->_d[$priority][$index]:false
 			);
 	}
 
 	/**
-	 * Appends an item into the list at the end of the specified priority.  The position of the added item may 
+	 * Appends an item into the list at the end of the specified priority.  The position of the added item may
 	 * not be at the end of the list.
 	 * @param mixed item to add into the list at priority
 	 * @param numeric priority blank or null for the default priority
@@ -259,7 +260,7 @@ class PriorityList extends ListCollection
 	{
 		if($this->getReadOnly())
 			throw new InvalidOperationException('list_readonly',get_class($this));
-		
+
 		return $this->insertAtIndexInPriority($item,false,$priority,true);
 	}
 
@@ -273,35 +274,37 @@ class PriorityList extends ListCollection
 	 */
 	public function insertAt($index,$item)
 	{
-		if($this->getReadOnly())
+		if($this->getReadOnly()){
 			throw new InvalidOperationException('list_readonly',get_class($this));
-		
-		if(($priority=$this->priorityAt($index,true))!==false)
+        }
+
+		if(($priority=$this->priorityAt($index,true))!==false){
 			$this->insertAtIndexInPriority($item,$priority[1],$priority[0]);
-		else
-			throw new InvalidDataValueException('list_index_invalid',$index);
+        }else{
+			throw new InvalidDataValueException('list_index_invalid',$index);//@codeCoverageIgnore
+        }
 	}
 
 	/**
-	 * Inserts an item at the specified index within a priority.  Override and call this method to 
+	 * Inserts an item at the specified index within a priority.  Override and call this method to
 	 * insert your own functionality.
 	 * @param mixed item to add within the list.
 	 * @param integer index within the priority to add the item, defaults to false which appends the item at the priority
 	 * @param numeric priority priority of the item.  defaults to null, which sets it to the default priority
 	 * @param boolean preserveCache specifies if this is a special quick function or not. This defaults to false.
-	 * @throws TInvalidDataValueException If the index specified exceeds the bound
-	 * @throws TInvalidOperationException if the list is read-only
+	 * @throws InvalidDataValueException If the index specified exceeds the bound
+	 * @throws InvalidOperationException if the list is read-only
 	 */
 	public function insertAtIndexInPriority($item,$index=false,$priority=null,$preserveCache=false)
 	{
 		if($this->getReadOnly())
 			throw new InvalidOperationException('list_readonly',get_class($this));
-		
+
 		if($priority===null){
 			$priority=$this->getDefaultPriority();
 		}
 		$priority=(string)round(floatval($priority), $this->_p);
-		
+
 		if($preserveCache) {
 			$this->sortPriorities();
 			$cc=0;
@@ -310,7 +313,7 @@ class PriorityList extends ListCollection
 					break;
 				else
 					$cc+=count($items);
-			
+
 			if($index===false&&isset($this->_d[$priority])) {
 				$c=count($this->_d[$priority]);
 				$c+=$cc;
@@ -323,7 +326,7 @@ class PriorityList extends ListCollection
 				$this->_o = false;
 				$this->_d[$priority]=array($item);
 			}
-			
+
 			if($this->_fd&&is_array($this->_fd)) // if there is a flattened array cache
 				array_splice($this->_fd,$c,0,array($item));
 		} else {
@@ -344,13 +347,13 @@ class PriorityList extends ListCollection
 			else
 				$this->_fd=null;
 		}
-		
+
 		$this->_c++;
-		
+
 		return $c;
-		
+
 	}
-	
+
 
 	/**
 	 * Removes an item from the priority list.
@@ -365,14 +368,14 @@ class PriorityList extends ListCollection
 	{
 		if($this->getReadOnly())
 			throw new InvalidOperationException('list_readonly',get_class($this));
-		
+
 		if(($p=$this->priorityOf($item,true))!==false)
 		{
 			if($priority!==false) {
 				if($priority===null)
 					$priority=$this->getDefaultPriority();
 				$priority=(string)round(floatval($priority),$this->_p);
-				
+
 				if($p[0]!=$priority)
 					throw new InvalidDataValueException('list_item_inexistent');
 			}
@@ -392,16 +395,17 @@ class PriorityList extends ListCollection
 	 */
 	public function removeAt($index)
 	{
-		if($this->getReadOnly())
+		if($this->getReadOnly()){
 			throw new InvalidOperationException('list_readonly',get_class($this));
-		
-		if(($priority=$this->priorityAt($index, true))!==false)
+        }
+		if(($priority=$this->priorityAt($index, true))!==false){
 			return $this->removeAtIndexInPriority($priority[1],$priority[0]);
-		throw new InvalidDataValueException('list_index_invalid',$index);
+        }
+		throw new InvalidDataValueException('list_index_invalid',$index);//@codeCoverageIgnore
 	}
 
 	/**
-	 * Removes the item at a specific index within a priority.  Override 
+	 * Removes the item at a specific index within a priority.  Override
 	 * and call this method to insert your own functionality.
 	 * @param integer index of item to remove within the priority.
 	 * @param numeric priority of the item to remove, defaults to null, or left blank, it is then set to the default priority
@@ -410,23 +414,25 @@ class PriorityList extends ListCollection
 	 */
 	public function removeAtIndexInPriority($index, $priority=null)
 	{
-		if($this->getReadOnly())
+		if($this->getReadOnly()){
 			throw new InvalidOperationException('list_readonly',get_class($this));
-			
-		if($priority===null)
+        }
+
+		if($priority===null){
 			$priority=$this->getDefaultPriority();
+        }
 		$priority=(string)round(floatval($priority),$this->_p);
-		
+
 		if(!isset($this->_d[$priority])||$index<0||$index>=count($this->_d[$priority]))
 			throw new InvalidDataValueException('list_item_inexistent');
-		
+
 		// $value is an array of elements removed, only one
 		$value=array_splice($this->_d[$priority],$index,1);
 		$value=$value[0];
-		
+
 		if(!count($this->_d[$priority]))
 			unset($this->_d[$priority]);
-		
+
 		$this->_c--;
 		$this->_fd=null;
 		return $value;
@@ -439,7 +445,7 @@ class PriorityList extends ListCollection
 	{
 		if($this->getReadOnly())
 			throw new InvalidOperationException('list_readonly',get_class($this));
-		
+
 		$d=array_reverse($this->_d,true);
 		foreach($this->_d as $priority=>$items) {
 			for($index=count($items)-1;$index>=0;$index--)
@@ -481,17 +487,17 @@ class PriorityList extends ListCollection
 	public function priorityOf($item,$withindex = false)
 	{
 		$this->sortPriorities();
-		
+
 		$absindex = 0;
 		foreach($this->_d as $priority=>$items) {
 			if(($index=array_search($item,$items,true))!==false) {
 				$absindex+=$index;
-				return $withindex?array($priority,$index,$absindex, 
+				return $withindex?array($priority,$index,$absindex,
 						'priority'=>$priority,'index'=>$index,'absindex'=>$absindex):$priority;
-			} else
+			} else{
 				$absindex+=count($items);
+            }
 		}
-		
 		return false;
 	}
 
@@ -506,23 +512,24 @@ class PriorityList extends ListCollection
 	 */
 	public function priorityAt($index,$withindex = false)
 	{
-		if($index<0||$index>=$this->getCount())
+		if($index<0||$index>=$this->getCount()){
 			throw new InvalidDataValueException('list_index_invalid',$index);
-		
+        }
 		$absindex=$index;
 		$this->sortPriorities();
 		foreach($this->_d as $priority=>$items) {
-			if($index>=($c=count($items)))
+			if($index>=($c=count($items))){
 				$index-=$c;
-			else
-				return $withindex?array($priority,$index,$absindex, 
+            }else{
+				return $withindex?array($priority,$index,$absindex,
 						'priority'=>$priority,'index'=>$index,'absindex'=>$absindex):$priority;
+            }
 		}
-		return false;
+		return false;//@codeCoverageIgnore
 	}
 
 	/**
-	 * This inserts an item before another item within the list.  It uses the same priority as the 
+	 * This inserts an item before another item within the list.  It uses the same priority as the
 	 * found index item and places the new item before it.
 	 * @param mixed indexitem the item to index
 	 * @param mixed the item to add before indexitem
@@ -531,19 +538,20 @@ class PriorityList extends ListCollection
 	 */
 	public function insertBefore($indexitem, $item)
 	{
-		if($this->getReadOnly())
+		if($this->getReadOnly()){
 			throw new InvalidOperationException('list_readonly',get_class($this));
-			
-		if(($priority=$this->priorityOf($indexitem,true))===false)
+        }
+
+		if(($priority=$this->priorityOf($indexitem,true))===false){
 			throw new InvalidDataValueException('list_item_inexistent');
-		
+        }
 		$this->insertAtIndexInPriority($item,$priority[1],$priority[0]);
-		
+
 		return $priority[2];
 	}
 
 	/**
-	 * This inserts an item after another item within the list.  It uses the same priority as the 
+	 * This inserts an item after another item within the list.  It uses the same priority as the
 	 * found index item and places the new item after it.
 	 * @param mixed indexitem the item to index
 	 * @param mixed the item to add after indexitem
@@ -554,12 +562,12 @@ class PriorityList extends ListCollection
 	{
 		if($this->getReadOnly())
 			throw new InvalidOperationException('list_readonly',get_class($this));
-			
+
 		if(($priority=$this->priorityOf($indexitem,true))===false)
 			throw new InvalidDataValueException('list_item_inexistent');
-		
+
 		$this->insertAtIndexInPriority($item,$priority[1]+1,$priority[0]);
-		
+
 		return $priority[2]+1;
 	}
 
@@ -584,7 +592,7 @@ class PriorityList extends ListCollection
 	 * Combines the map elements which have a priority below the parameter value
 	 * @param numeric the cut-off priority.  All items of priority less than this are returned.
 	 * @param boolean whether or not the input cut-off priority is inclusive.  Default: false, not inclusive.
-	 * @return array the array of priorities keys with values of arrays of items that are below a specified priority.  
+	 * @return array the array of priorities keys with values of arrays of items that are below a specified priority.
 	 *  The priorities are sorted so important priorities, lower numerics, are first.
 	 */
 	public function toArrayBelowPriority($priority,$inclusive=false)
@@ -604,7 +612,7 @@ class PriorityList extends ListCollection
 	 * Combines the map elements which have a priority above the parameter value
 	 * @param numeric the cut-off priority.  All items of priority greater than this are returned.
 	 * @param boolean whether or not the input cut-off priority is inclusive.  Default: true, inclusive.
-	 * @return array the array of priorities keys with values of arrays of items that are above a specified priority.  
+	 * @return array the array of priorities keys with values of arrays of items that are above a specified priority.
 	 *  The priorities are sorted so important priorities, lower numerics, are first.
 	 */
 	public function toArrayAbovePriority($priority,$inclusive=true)
@@ -619,7 +627,7 @@ class PriorityList extends ListCollection
 		}
 		return $items;
 	}
-	
+
 
 	/**
 	 * Copies iterable data into the priority list.
@@ -650,7 +658,7 @@ class PriorityList extends ListCollection
 	/**
 	 * Merges iterable data into the priority list.
 	 * New data will be appended to the end of the existing data.  If another PriorityList is merged,
-	 * the incoming parameter items will be appended at the priorities they are present.  These items will be added 
+	 * the incoming parameter items will be appended at the priorities they are present.  These items will be added
 	 * to the end of the existing items with equal priorities, if there are any.
 	 * @param mixed the data to be merged with, must be an array or object implementing Traversable
 	 * @throws TInvalidDataTypeException If data is neither an array nor an iterator.
@@ -669,7 +677,7 @@ class PriorityList extends ListCollection
 		{
 			foreach($data as $priority=>$item)
 				$this->add($item);
-			
+
 		}
 		else if($data!==null)
 			throw new InvalidDataTypeException('map_data_not_iterable');
@@ -699,12 +707,12 @@ class PriorityList extends ListCollection
 
 	/**
 	 * Sets the element at the specified offset. This method is required by the interface ArrayAccess.
-	 * Setting elements in a priority list is not straight forword when appending and setting at the 
+	 * Setting elements in a priority list is not straight forword when appending and setting at the
 	 * end boundary.  When appending without an offset (a null offset), the item will be added at
 	 * the default priority.  The item may not be the last item in the list.  When appending with an
 	 * offset equal to the count of the list, the item will get be appended with the last items priority.
 	 *
-	 * All together, when setting the location of an item, the item stays in that location, but appending 
+	 * All together, when setting the location of an item, the item stays in that location, but appending
 	 * an item into a priority list doesn't mean the item is at the end of the list.
 	 * @param integer the offset to set element
 	 * @param mixed the element value
