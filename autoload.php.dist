@@ -1,4 +1,4 @@
 <?php
-require_once __DIR__.'/vendor/autoload.php';
-\dayax\core\ExceptionFactory::register;
+require_once __DIR__.'/../../../vendor/autoload.php';
+\dayax\core\ExceptionFactory::register();
 ?>
