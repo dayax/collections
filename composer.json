@@ -1,8 +1,8 @@
 {
     "name": "dayax/collections",
     "type": "library",
-    "description": "Library to handle array",
-    "homepage": "https://github.com/dayax/core",
+    "description": "a package to handle array",
+    "homepage": "https://github.com/dayax/collections",
     "license": "MIT",
     "keywords": [
         "phpunit",
@@ -23,6 +23,12 @@
     "autoload":{
         "psr-0":{
             "dayax\\collections": ""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev",
+            "dev-develop": "1.1-dev"
         }
     }
 }
